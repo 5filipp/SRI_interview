@@ -1,0 +1,150 @@
+---
+title: 'Relationship between the occurrence of female depression and intensity of COVID-19 pandemic.' 
+author: "Filipp Trubin. SRI Interview"
+date: "1/11/2022"
+output: html_document
+runtime: shiny
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+**The topic parallels the most recent article by HRI on medium.com:**      
+[SRI research points to a tripling of depression risk in emerging adults during the pandemic](https://medium.com/dish/sri-research-points-to-a-tripling-of-depression-risk-in-emerging-adults-during-the-pandemic-c39819c00946)   
+This observation can be useful both for people experiencing depression and for researchers as another point of view. 
+
+**Steps:**  
+1. Datasets loading and preparation.     
+2. EDA: build time series charts.   
+3. Select null hypothesis. Define model.   
+4. Calculate the correlation coefficient, build linear regression model.   
+5. Summary.   
+6. Conclusion.   
+7. References.   
+
+### 1. Datasets loading and preparation
+**Load dataset "Indicators of Anxiety or Depression Based on Reported Frequency of Symptoms During Last 7 Days".**   
+[Dataset/Variables description](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) (source: data.cdc.gov)
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(shiny)
+options(scipen=999) 
+
+data_survey <- read.csv("https://data.cdc.gov/api/views/8pt5-q6wp/rows.csv?accessType=DOWNLOAD")
+head(data_survey)
+```
+
+**Filter down focus group: Var.1: "Depression Value" Var.2: "Female".**   
+```{r}
+data_survey_1 <- data_survey[which(data_survey$Indicator == 'Symptoms of Depressive Disorder'
+          & data_survey$Group == 'By Sex'
+          & data_survey$Subgroup == 'Female'),]
+```
+
+**Convert Date field / drop NA.**   
+```{r}
+data_survey_2 <- data_survey_1 %>% dplyr::select(Time.Period.End.Date, Value)
+data_survey_2$Time.Period.End.Date <- mdy(data_survey_2$Time.Period.End.Date)
+data_survey_3 <- data_survey_2[complete.cases(data_survey_2), ]
+```
+
+**Load dataset "United States COVID-19 Cases and Deaths by State over Time.**      
+[Dataset/Variables description](https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36) (source: data.cdc.gov)   
+```{r}
+data_COVID19 <- read.csv("https://data.cdc.gov/api/views/9mfq-cb36/rows.csv?accessType=DOWNLOAD")
+head(data_survey)
+```
+
+**Filter down focus group: Var.1: "Date" Var.2: "Number of cases".**   
+```{r}
+data_COVID19_2 <- data_COVID19 %>% dplyr::select(submission_date, new_case)
+data_COVID19_2$submission_date <- mdy(data_COVID19_2$submission_date)
+data_COVID19_2 <- data_COVID19_2 %>% filter(new_case > 0 & submission_date <= as.Date('2021-12-13'))
+```
+
+**Grouping number of cases by day.** 
+```{r}
+data_COVID19_3 <- data_COVID19_2 %>%
+  group_by(submission_date) %>%
+  summarize(new_case_daily = sum(new_case, na.rm = TRUE))
+```
+### 2. EDA: build time series charts.
+**EDA: build graph to reflect number of cases daily (06/2020 - 12/2021).**   
+```{r}
+ggplot(data_COVID19_3) +
+  aes(x = submission_date, y = new_case_daily, colour = new_case_daily) +
+  geom_line(size = 1L) +
+  scale_color_distiller(palette = "Blues", direction = 1) +
+  labs(title = "COVID19 cases per day",x = NULL, y = 'COVID-19 Cases') +
+  ylim(0, 700000) +
+  scale_x_date(limit=c(as.Date('2020-06-01'), as.Date('2021-12-13'))) +
+  theme_classic()
+```
+
+**EDA: build graph to reflect Depression Value daily (05/2020 - 12-2021).**   
+```{r}
+ggplot(data_survey_3) +
+  aes(x = Time.Period.End.Date, y = Value, colour = Value) +
+  geom_line(size = 1L) +
+  scale_color_distiller(palette = 'Reds', direction = 1) +
+  labs(title = 'Depression Value per day',x = NULL,y = 'Depression Value') +
+  theme_classic() +
+  ylim(0, 40)
+```
+
+### 3. Select null hypothesis. Define model.   
+**Null hypothesis** is female Depression appearance or increasing doesn't have a relationship with intensity of COVID-19 pandemic.   
+To **accept** or **reject** that hypothesis linear regression model is applied.
+
+### 4. Calculate correlation coefficient of Depression Value and COVID-19 cases per day.    
+Build linear regression model.     
+**Merge datasets. Number of cases and Depression Value aggregated by day.**   
+```{r}
+data_joined <- merge(x = data_survey_3, y = data_COVID19_3, by.x=c('Time.Period.End.Date'), by.y=c('submission_date'))
+```
+
+**Add new column: rolling Correlation coefficient (Pearson method).**   
+```{r}
+data_joined[ , 'Correlation_Coef'] <- NA
+for (i in 1:nrow(data_joined)) {
+  data_joined[i, 4] = as.numeric(cor(data_joined[1:i, 2], data_joined[1:i, 3]))}
+data_joined[1, 4] = 0
+data_joined$Correlation_Coef <- round(data_joined$Correlation_Coef, digits = 2)
+```
+
+
+**EDA: Combine graphs: Depression Value + COVID19 cases + rolling Corr. coef.**  
+```{r}
+ggplot(data = data_joined) +
+  geom_line(aes(x = Time.Period.End.Date, y = new_case_daily / 10000), color='blue') +
+  geom_line(aes(x = Time.Period.End.Date, y = Value), color='red') +
+  aes(x = Time.Period.End.Date, y = Correlation_Coef * 10 + 50, color = Correlation_Coef) +
+  labs(x = NULL, y = NULL, title = 'COVID-19 cases | Depression Value | Rolling Correlation coef') +
+  geom_point(shape = 'circle') +
+  lims(y = c(0, 100)) +
+  scale_x_date(limit=c(as.Date('2020-06-01'), as.Date('2021-12-13')), date_breaks = '3 month', date_labels='%Y/%m') +
+  theme_classic()
+```
+Overlaying graphs under a common scale (Y-axis) allows you to see the relationship between variables until mid-2021. Further, the correlation decreases.  
+
+**Build LR model.**   
+```{r}
+linear_regression = lm(Value ~ new_case_daily, data = data_joined)
+summary(linear_regression)
+```
+
+### 5. Summary.    
+**P-value** (0.04814) is less than 0.05 which means the **relationship is statistically significant** and indicates strong evidence against the null hypothesis.  
+
+### 6. Conslusion.   
+There is a relationship between the occurrence of female depression and the intensity of the COVID-19 pandemic. Based on the rolling correlation coefficient, the strongest relationship was observed in the first year of the pandemic. Since the second half of 2021, the relationship has been gradually decreasing. This can be interpreted as an acquired tolerance to the pandemic. 
+
+### 6. References. 
+Datasets, support files, .PDF version of the observation are available in the [Github repo](https://github.com/5filipp/SRI_interview.git)
+
+
