@@ -30,8 +30,8 @@ This observation can be useful both for people experiencing depression and for r
 
 ```{r}
 library(dplyr, warn.conflicts = FALSE)
+library(lubridate, warn.conflicts = FALSE)
 library(ggplot2)
-library(lubridate)
 library(shiny)
 options(scipen=999) 
 
