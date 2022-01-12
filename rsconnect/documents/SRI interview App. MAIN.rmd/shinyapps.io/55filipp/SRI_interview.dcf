@@ -1,0 +1,13 @@
+name: SRI_interview
+title: SRI_interview
+username:
+account: 55filipp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5427720
+bundleId: 5458525
+url: https://55filipp.shinyapps.io/SRI_interview/
+when: 1641954545.61399
+lastSyncTime: 1641954545.61401
+asMultiple: FALSE
+asStatic: FALSE

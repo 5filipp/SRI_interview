@@ -78,7 +78,7 @@ data_COVID19_3 <- data_COVID19_2 %>%
 ```
 ### 2. EDA: build time series charts.
 **EDA: build graph to reflect number of cases daily (06/2020 - 12/2021).**   
-```{r}
+```{r warning=FALSE}
 ggplot(data_COVID19_3) +
   aes(x = submission_date, y = new_case_daily, colour = new_case_daily) +
   geom_line(size = 1L) +
@@ -122,7 +122,7 @@ data_joined$Correlation_Coef <- round(data_joined$Correlation_Coef, digits = 2)
 
 
 **EDA: Combine graphs: Depression Value + COVID19 cases + rolling Corr. coef.**  
-```{r}
+```{r message=FALSE, warning=FALSE}
 ggplot(data = data_joined) +
   geom_line(aes(x = Time.Period.End.Date, y = new_case_daily / 10000), color='blue') +
   geom_line(aes(x = Time.Period.End.Date, y = Value), color='red') +
