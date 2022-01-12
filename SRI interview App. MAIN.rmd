@@ -133,7 +133,8 @@ ggplot(data = data_joined) +
   scale_x_date(limit=c(as.Date('2020-06-01'), as.Date('2021-12-13')), date_breaks = '3 month', date_labels='%Y/%m') +
   theme_classic()
 ```
-Overlaying graphs under a common scale (Y-axis) allows you to see the relationship between variables until mid-2021. Further, the correlation decreases.  
+
+Overlaying graphs under a common scale (Y-axis) allows to see the relationship between variables until mid-2021. Further, the correlation decreases.  
 
 **Build LR model.**   
 ```{r}
