@@ -1,17 +1,17 @@
 ---
-title: "SRI Interview App (PDF)"
-author: "Trubin Filipp"
-date: "1/11/2022"
-output:
-  html_document:
-    df_print: paged
+title: 'Relationship between the occurrence of female depression and intensity of COVID-19 pandemic.'   
+author: "Filipp Trubin. SRI Interview"      
+date: "1/11/2022"   
+output: pdf_document
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 **The observation parallels the most recent article by SRI on medium.com:**      
-[SRI research points to a tripling of depression risk in emerging adults during the pandemic](https://medium.com/dish/sri-research-points-to-a-tripling-of-depression-risk-in-emerging-adults-during-the-pandemic-c39819c00946)   
+*Link:* *[SRI research points to a tripling of depression risk in emerging adults during the pandemic](https://medium.com/dish/sri-research-points-to-a-tripling-of-depression-risk-in-emerging-adults-during-the-pandemic-c39819c00946)*   
+
 This observation can be useful both for people experiencing depression and for researchers as another point of view. 
 
 **Steps:**  
@@ -24,8 +24,8 @@ This observation can be useful both for people experiencing depression and for r
 7. References.   
 
 ### 1. Datasets loading and preparation
-**Load dataset "Indicators of Anxiety or Depression Based on Reported Frequency of Symptoms During Last 7 Days".**   
-[Dataset/Variables description](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) (source: data.cdc.gov)
+**Load dataset** "Indicators of Anxiety or Depression Based on Reported Frequency of Symptoms During Last 7 Days".    
+*Link:*[Dataset/Variables description](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) (source: data.cdc.gov)
 
 
 ```{r}
@@ -53,8 +53,8 @@ data_survey_2$Time.Period.End.Date <- mdy(data_survey_2$Time.Period.End.Date)
 data_survey_3 <- data_survey_2[complete.cases(data_survey_2), ]
 ```
 
-**Load dataset "United States COVID-19 Cases and Deaths by State over Time.**      
-[Dataset/Variables description](https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36) (source: data.cdc.gov)   
+**Load dataset** "United States COVID-19 Cases and Deaths by State over Time."        
+*Link:* [Dataset/Variables description](https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36) (source: data.cdc.gov)   
 ```{r}
 data_COVID19 <- read.csv("https://data.cdc.gov/api/views/9mfq-cb36/rows.csv?accessType=DOWNLOAD")
 head(data_survey)
@@ -145,7 +145,4 @@ summary(linear_regression)
 There is a relationship between the occurrence of female depression and the intensity of the COVID-19 pandemic. Based on the rolling correlation coefficient, the strongest relationship was observed in the first year of the pandemic. Since the second half of 2021, the relationship has been gradually decreasing. This can be interpreted as an acquired tolerance to the pandemic. 
 
 ### 6. References. 
-Datasets, support files, .PDF version of the observation are available in the [Github repo](https://github.com/5filipp/SRI_interview.git)
-
-
-
+Datasets, support files, .PDF version of the observation are available in the *Link:* [Github repo](https://github.com/5filipp/SRI_interview.git)
