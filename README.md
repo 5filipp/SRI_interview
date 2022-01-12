@@ -4,6 +4,8 @@ date: "1/11/2022"
 
 **[Run Applecation](https://55filipp.shinyapps.io/SRI_interview_App_Filipp_Trubin/?_ga=2.151155645.521776089.1641943335-1307707077.1641782051)**
 
+
+
 **The observation parallels the most recent article by SRI on medium.com:**      
 [SRI research points to a tripling of depression risk in emerging adults during the pandemic](https://medium.com/dish/sri-research-points-to-a-tripling-of-depression-risk-in-emerging-adults-during-the-pandemic-c39819c00946)   
 This observation can be useful both for people experiencing depression and for researchers as another point of view. 

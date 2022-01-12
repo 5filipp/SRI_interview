@@ -28,7 +28,7 @@ This observation can be useful both for people experiencing depression and for r
 [Dataset/Variables description](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) (source: data.cdc.gov)
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(dplyr, warn.conflicts = FALSE)
 library(lubridate, warn.conflicts = FALSE)
 library(ggplot2)
@@ -36,6 +36,9 @@ library(shiny)
 options(scipen=999) 
 
 data_survey <- read.csv("https://data.cdc.gov/api/views/8pt5-q6wp/rows.csv?accessType=DOWNLOAD")
+```
+
+```{r warning=FALSE}
 head(data_survey)
 ```
 
