@@ -1,14 +1,14 @@
 ---
-title: 'Relationship between the occurrence of female depression and intensity of COVID-19 pandemic.' 
-author: "Filipp Trubin. SRI Interview"
+title: "SRI Interview App (PDF)"
+author: "Trubin Filipp"
 date: "1/11/2022"
-output: html_document
-runtime: shiny
+output:
+  html_document:
+    df_print: paged
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 **The observation parallels the most recent article by SRI on medium.com:**      
 [SRI research points to a tripling of depression risk in emerging adults during the pandemic](https://medium.com/dish/sri-research-points-to-a-tripling-of-depression-risk-in-emerging-adults-during-the-pandemic-c39819c00946)   
@@ -30,8 +30,8 @@ This observation can be useful both for people experiencing depression and for r
 
 ```{r}
 library(dplyr, warn.conflicts = FALSE)
+library(lubridate, warn.conflicts = FALSE)
 library(ggplot2)
-library(lubridate)
 library(shiny)
 options(scipen=999) 
 
@@ -146,5 +146,6 @@ There is a relationship between the occurrence of female depression and the inte
 
 ### 6. References. 
 Datasets, support files, .PDF version of the observation are available in the [Github repo](https://github.com/5filipp/SRI_interview.git)
+
 
 
