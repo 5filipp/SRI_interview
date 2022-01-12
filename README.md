@@ -2,7 +2,7 @@
 author: "Filipp Trubin. SRI Interview"   
 date: "1/11/2022"   
 
-**[Run Applecation](https://55filipp.shinyapps.io/SRI_interview_App_Filipp_Trubin/?_ga=2.151155645.521776089.1641943335-1307707077.1641782051)**
+**[Run Applecation](https://55filipp.shinyapps.io/SRI_interview/)**
 
 
 
