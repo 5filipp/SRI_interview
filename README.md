@@ -22,12 +22,12 @@ This observation can be useful both for people experiencing depression and for r
 
 **Resources:**   
 **"Indicators of Anxiety or Depression Based on Reported Frequency of Symptoms During Last 7 Days".**    
-[GitHub repo](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) (source: data.cdc.gov)
+[Dataset/Variables descriptio](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) (source: data.cdc.gov)
 
-**Load dataset "United States COVID-19 Cases and Deaths by State over Time.**       
+**"United States COVID-19 Cases and Deaths by State over Time."**       
 [Dataset/Variables description](https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36) (source: data.cdc.gov)   
 
-Datasets are also available: [Dataset/Variables description](https://github.com/5filipp/SRI_interview/tree/main/Data)
+Datasets are also available: [GitHub repo](https://github.com/5filipp/SRI_interview/tree/main/Data)
 
 
 
